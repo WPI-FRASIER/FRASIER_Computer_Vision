@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+Launch file to run single softkinetic camera in stand alone (no other /tf) setup with Rviz
+The arguments given are the device indices of the cameras determined by the DepthSense deamon.
+Additional nodes represent t
+
+-->
+<launch>
+  <node name="softkinetic_camera" pkg="frasier_object_detection" type="softkinetic_bringup_node" args="0" output="screen" >
+    <param name="camera_link" type="string" value="/softkinetic_camera_link" />
+    <param name="artag_link" type="string" value="/softkinetic_artag_link" />
+    <param name="rgb_optical_frame" type="string" value="/softkinetic_camera_rgb_optical_frame" />
+    <param name="depth_optical_frame" type="string" value="/softkinetic_camera_depth_optical_frame" />
+    <param name="confidence_threshold" type="int" value="200" />
+    <param name="use_radius_filter" type="bool" value="false" />
+    <param name="search_radius" type="double" value="0.05" />
+    <param name="min_neighbours" type="int" value="50" />
+      <param name="camera_info_url" type="string" value="file://$(find frasier_object_detection)/camera_info/senz3d_monocam_calib.yaml"/>
+  </node>
+
+  <node pkg="tf" type="static_transform_publisher" name="softkinect_tf"
+        args="0 0 0 0 0 1.2 /artag_base /softkinetic_camera_link 40" />
+<!--
+  <node pkg="tf" type="static_transform_publisher" name="artag_tf"
+        args="0 0 10 0 0 1.2 /base /softkinetic_artag_link 30" />
+    -->
+
+
+   
+
+
+</launch>
+
